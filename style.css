@@ -1,0 +1,343 @@
+/* Reset and base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #E8E0D8; /* soft beige background */
+  color: #222;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* Container with rounded corners and background white */
+.container {
+  background: white;
+  border-radius: 1.5rem 1.5rem 1.5rem 1.5rem; 
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  position: relative;
+}
+
+/* Left text side */
+.left-side {
+  flex: 1;
+  padding: 4rem; /* can reduce on smaller screens */
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #534666;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+}
+
+/* Logo icon */
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: #9C91FF;
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Navigation */
+.nav {
+  position: absolute;
+  top: 2.5rem;
+  right: 4rem;
+  display: flex;
+  gap: 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #222;
+  transition: color 0.3s ease;
+}
+
+.nav a:hover {
+  color: #9C91FF;
+}
+
+/* Heading with gradient text on parts */
+h1 {
+  font-weight: 900;
+  font-size: 3.25rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  max-width: 16ch;
+  color: #222;
+}
+
+h1 .gradient1 {
+  background: linear-gradient(90deg, #9C91FF 0%, #88727A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h1 .gradient2 {
+  background: linear-gradient(90deg, #B97944 0%, #DA9863 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Subtitle */
+.subtitle {
+  color: #807D7B;
+  font-weight: 500;
+  font-size: 1rem;
+  max-width: 20ch;
+  margin-bottom: 2.5rem;
+}
+
+/* Call to action button */
+.cta-button {
+  background: #9C91FF;
+  color: white;
+  border: none;
+  outline: none;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 1rem 2.5rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 6px 12px rgba(156, 145, 255, 0.4);
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background: #7c6ff8;
+}
+
+.cta-button svg {
+  stroke: white;
+  stroke-width: 2;
+  width: 20px;
+  height: 20px;
+}
+
+/* Right side with beige background and rounded corners */
+.right-side {
+  flex: 1;
+  border-radius: 0;
+  padding: 2rem;
+}
+
+/* Main portrait image styling */
+.right-side img.main-img {
+  width: 320px;
+  height: auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 0.12);
+  object-fit: cover;
+  position: relative;
+  z-index: 2;
+}
+
+/* Chat bubbles container */
+.chat-bubbles {
+  position: absolute;
+  left: -6rem;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 3;
+  max-width: 250px;
+}
+
+/* Individual chat bubble styles */
+.chat-bubble {
+  padding: 0.75rem 1.2rem;
+  border-radius: 15px;
+  max-width: 100%;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.07);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Sent message bubble style */
+.chat-bubble.sent {
+  background-color: #DACDB7;
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+/* Received message bubble style */
+.chat-bubble.received {
+  background-color: #C8BBFF;
+  color: #222;
+  border-bottom-left-radius: 0;
+}
+
+/* Small avatar in chat bubble */
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 0.75rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.12);
+  overflow: hidden;
+}
+
+/* Time and ticks under message */
+.chat-time {
+  font-size: 0.65rem;
+  color: #666;
+  margin-left: auto;
+  user-select: none;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+
+.voice-message {
+  background-color: #DACDB7;
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.07);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 220px;
+  margin-top: 1rem;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4a3f2c;
+}
+
+
+.voice-waveform {
+  flex-grow: 1;
+  height: 20px;
+  background: linear-gradient(90deg, #B79D72 25%, transparent 25%, transparent 50%, #B79D72 50%, #B79D72 75%, transparent 75%);
+  background-size: 12px 100%;
+  border-radius: 0.75rem;
+}
+
+
+.profile-badge {
+  position: absolute;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+  width: 90px;
+  cursor: pointer;
+  user-select: none;
+  background: white;
+  text-align: center;
+  color: #534666;
+  font-weight: 600;
+  font-size: 0.8rem;
+  transition: transform 0.3s;
+}
+
+.profile-badge img {
+  width: 100%;
+  border-radius: 1rem 1rem 0 0;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-badge .name {
+  padding: 0.35rem 0;
+  background: #9C91FF;
+  color: white;
+  border-radius: 0 0 1rem 1rem;
+}
+
+.profile-badge.top-left {
+  top: 3rem;
+  left: -4.5rem;
+  width: 80px;
+}
+
+.profile-badge.bottom-right {
+  bottom: 2rem;
+  right: calc(50% - 180px);
+  transform: translateX(50%);
+  width: 125px;
+}
+
+.profile-badge:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.22);
+}
+
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 380px;
+  height: 100%;
+  background: #D9B37B;
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+  border-radius: 0 1.5rem 1.5rem 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    max-width: 400px;
+    border-radius: 1.5rem;
+  }
+  .right-side {
+    width: 100%;
+    height: 300px;
+    border-radius: 0 0 1.5rem 1.5rem;
+    position: relative;
+    padding: 0;
+    margin-top: 1rem;
+  }
+  .right-side img.main-img {
+    width: 100%;
+    border-radius: 0 0 1.5rem 1.5rem;
+  }
+  .chat-bubbles, .profile-badge {
+    display: none;
+  }
+  .nav {
+    position: static;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+}

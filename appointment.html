@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Care Connect | Book Appointment</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="left-side">
+      <div class="logo"><div class="logo-icon">CC</div>Care Connect</div>
+      <h1>Schedule Your Visit</h1>
+      <p class="subtitle">Fill in the details below to book an appointment with our doctors.</p>
+
+      <form action="#" method="POST">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+        <label for="contact">Contact Number</label>
+        <input type="tel" id="contact" name="contact" placeholder="0917-123-4567" required>
+
+        <label for="date">Preferred Date</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="time">Preferred Time</label>
+        <input type="time" id="time" name="time" required>
+
+        <label for="message">Reason for Visit</label>
+        <textarea id="message" name="message" rows="4" placeholder="Describe your symptoms or reason for booking..." required></textarea>
+
+        <button type="submit" class="cta-button">Submit Appointment</button>
+      </form>
+    </div>
+
+    <div class="right-side">
+      <img src="doctor-illustration.jpg" alt="Doctor Illustration" class="main-img">
+    </div>
+  </div>
+</body>
+</html>
