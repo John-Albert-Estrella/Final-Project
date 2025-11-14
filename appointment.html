@@ -3,42 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Care Connect | Book Appointment</title>
+  <title>Book Appointment | CareConnect</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
+
   <div class="container">
     <div class="left-side">
-      <div class="logo"><div class="logo-icon">CC</div>Care Connect</div>
+      <div class="logo">
+        <div class="logo-icon">C</div>
+        CareConnect
+      </div>
+
       <h1>Schedule Your Visit</h1>
       <p class="subtitle">Fill in the details below to book an appointment with our doctors.</p>
 
-      <form action="#" method="POST">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" placeholder="Your full name" required>
-
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="you@example.com" required>
-
-        <label for="contact">Contact Number</label>
-        <input type="tel" id="contact" name="contact" placeholder="0917-123-4567" required>
-
-        <label for="date">Preferred Date</label>
-        <input type="date" id="date" name="date" required>
-
-        <label for="time">Preferred Time</label>
-        <input type="time" id="time" name="time" required>
-
-        <label for="message">Reason for Visit</label>
-        <textarea id="message" name="message" rows="4" placeholder="Describe your symptoms or reason for booking..." required></textarea>
-
+      <form id="appointmentForm" onsubmit="submitAppointment(event)">
+        <input type="text" id="fullname" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="date" id="date" required>
+        <textarea id="concern" placeholder="Describe your concern or symptoms" required></textarea>
         <button type="submit" class="cta-button">Submit Appointment</button>
       </form>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="index.html" style="color: #6B7280; text-decoration: none; font-weight: 500;">← Back to Home</a>
+      </div>
     </div>
 
     <div class="right-side">
-      <img src="doctor-illustration.jpg" alt="Doctor Illustration" class="main-img">
+      <img src="hospital.jpg" class="main-img" alt="Medical Appointment">
     </div>
   </div>
+
 </body>
 </html>

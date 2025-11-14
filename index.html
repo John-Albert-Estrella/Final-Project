@@ -1,38 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Care Connect | Home</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareConnect | Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
 </head>
 <body>
+
   <div class="container">
-    <!-- Left side text -->
-    <div class="left-side">
-      <div class="logo"><div class="logo-icon">CC</div>Care Connect</div>
-      <h1>
-        <span class="gradient1">Book an Appointment</span><br>
-        <span class="gradient2">Now</span>
-      </h1>
-      <p class="subtitle">Your health is our priority. Schedule your visit with ease.</p>
-      <a href="appointment.html" class="cta-button">
-        Book Now
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
+
+    <!-- NAVIGATION -->
+    <div class="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="login.html" style="padding: 0.5rem 1.5rem; background: linear-gradient(135deg, #9C91FF 0%, #7C6FFF 100%); border-radius: 0.75rem; color: white; font-weight: 600;">
+        Admin Login
       </a>
     </div>
 
-    <!-- Right side image -->
+    <!-- LEFT SIDE CONTENT -->
+    <div class="left-side">
+      <div class="logo">
+        <div class="logo-icon">C</div>
+        CareConnect
+      </div>
+
+      <h1>
+        Your Health, <span class="gradient1">Our Priority</span><br />
+        Book <span class="gradient2">Appointments</span> Easily.
+      </h1>
+
+      <p class="subtitle">
+        Fast, simple, and reliable healthcare scheduling—anytime, anywhere.
+      </p>
+
+      <a href="appointment.html">
+        <button class="cta-button">
+          Book Appointment Now
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </a>
+    </div>
+
+    <!-- RIGHT SIDE -->
     <div class="right-side">
-    
-    
-      <div class="profile-badge bottom-right">
-        <img src="DOC.jpg" alt="Doctor">
-        <div class="name">Dr. QUAK QUAK</div>
+      <img src="hospital.jpg" class="main-img" alt="Hospital Image">
+      
+      <!-- OPTIONAL CHAT BUBBLES -->
+      <div class="chat-bubbles">
+        <div class="chat-bubble sent">Hello, I need an appointment.</div>
+        <div class="chat-bubble received">Sure! How can I help?</div>
       </div>
     </div>
+
   </div>
+
 </body>
 </html>

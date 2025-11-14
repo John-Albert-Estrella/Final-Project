@@ -3,30 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Care Connect | Admin Login</title>
+  <title>Admin Login | CareConnect</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
+
   <div class="container">
     <div class="left-side">
-      <div class="logo"><div class="logo-icon">CC</div>Care Connect</div>
+      <div class="logo">
+        <div class="logo-icon">C</div>
+        CareConnect
+      </div>
+
       <h1>Admin / Doctor Login</h1>
       <p class="subtitle">Clinic staff or doctor access</p>
 
-      <form action="dashboard.html" method="POST">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" placeholder="Username" required>
-
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="••••••" required>
-
+      <form onsubmit="adminLogin(event)">
+        <input type="text" id="adminUser" placeholder="Username" required>
+        <input type="password" id="adminPass" placeholder="Password" required>
         <button type="submit" class="cta-button">Login</button>
       </form>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="index.html" style="color: #6B7280; text-decoration: none; font-weight: 500;">← Back to Home</a>
+      </div>
     </div>
 
     <div class="right-side">
-      <img src="doctor-illustration.jpg" alt="Doctor Illustration" class="main-img">
+      <img src="hospital.jpg" class="main-img" alt="Admin Login">
     </div>
   </div>
+
 </body>
 </html>
