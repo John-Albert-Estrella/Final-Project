@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Care Connect | Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | CareConnect</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
-
 </head>
-<body onload="loadAppointments()">
-    <h2>All Appointment Requests</h2>
-    <div id="appointmentList"></div>
+<body>
 
-    <button onclick="logoutAdmin()">Logout</button>
+  <nav class="sidebar">
+    <ul>
+      <li><a href="dashboard.html" class="active">Dashboard</a></li>
+      <li><a href="appointments-manage.html">Manage Appointments</a></li>
+      <li><a href="patients.html">Patient Records</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Welcome, Admin!</h2>
+    <div class="cards">
+      <div class="card">
+        <div>Total Appointments</div>
+        <div style="font-size: 2.5rem; margin-top: 0.5rem;">23</div>
+      </div>
+      <div class="card">
+        <div>Pending Approvals</div>
+        <div style="font-size: 2.5rem; margin-top: 0.5rem;">5</div>
+      </div>
+      <div class="card">
+        <div>Total Patients</div>
+        <div style="font-size: 2.5rem; margin-top: 0.5rem;">48</div>
+      </div>
+    </div>
+  </main>
+
 </body>
-
 </html>

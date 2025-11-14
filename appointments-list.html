@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointments | CareConnect</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body onload="loadAppointments()">
+
+  <div class="admin-page">
+    <div class="admin-header">
+      <div class="logo">
+        <div class="logo-icon">C</div>
+        CareConnect Admin
+      </div>
+      <a href="admin-home.html" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Admin Home
+      </a>
+    </div>
+
+    <div class="admin-content">
+      <div class="page-title-section">
+        <h1>All Appointment Requests</h1>
+        <p>Review and manage patient appointment requests</p>
+      </div>
+
+      <!-- FILTER TABS -->
+      <div class="filter-tabs">
+        <button class="tab-btn active" onclick="filterAppointments('all')">All</button>
+        <button class="tab-btn" onclick="filterAppointments('Pending')">Pending</button>
+        <button class="tab-btn" onclick="filterAppointments('Approved')">Approved</button>
+        <button class="tab-btn" onclick="filterAppointments('Declined')">Declined</button>
+      </div>
+
+      <div id="appointmentList"></div>
+    </div>
+  </div>
+
+  <script>
+    let currentFilter = 'all';
+
+    function filterAppointments(status) {
+      currentFilter = status;
+      
+      // Update active tab
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      loadAppointments();
+    }
+
+    window.filterAppointments = filterAppointments;
+  </script>
+
+</body>
+</html>

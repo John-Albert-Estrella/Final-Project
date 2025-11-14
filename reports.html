@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Records | CareConnect</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body onload="checkAdminAuth(); loadPatients();">
+
+  <div class="admin-page">
+    <div class="admin-header">
+      <div class="logo">
+        <div class="logo-icon">C</div>
+        CareConnect Admin
+      </div>
+      <a href="admin-home.html" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Admin Home
+      </a>
+    </div>
+
+    <div class="admin-content">
+      <div class="page-title-section">
+        <h1>Patient Records</h1>
+        <p>View and manage all patient information</p>
+      </div>
+
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Patient Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Last Appointment</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="patientsTableBody">
+            <!-- Populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function loadPatients() {
+      const tbody = document.getElementById('patientsTableBody');
+      const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+      
+      if (appointments.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 3rem; color: #9CA3AF;">No patient records found</td></tr>';
+        return;
+      }
+
+      // Get unique patients
+      const patientsMap = {};
+      appointments.forEach(app => {
+        if (!patientsMap[app.email]) {
+          patientsMap[app.email] = {
+            name: app.name,
+            email: app.email,
+            phone: app.phone || 'N/A',
+            lastVisit: app.date,
+            status: app.status
+          };
+        }
+      });
+
+      const patients = Object.values(patientsMap);
+      
+      tbody.innerHTML = patients.map(patient => `
+        <tr>
+          <td><strong>${patient.name}</strong></td>
+          <td>${patient.email}</td>
+          <td>${patient.phone}</td>
+          <td>${patient.lastVisit}</td>
+          <td><span class="status-badge status-${patient.status.toLowerCase()}">${patient.status}</span></td>
+          <td>
+            <button class="btn-small" onclick="viewPatient('${patient.email}')">View Details</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function viewPatient(email) {
+      alert('Patient details for: ' + email + '\n\nThis feature would show full patient history and medical records.');
+    }
+  </script>
+
+</body>
+</html>

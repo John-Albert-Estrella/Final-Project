@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Today's Schedule | CareConnect</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body onload="checkAdminAuth()">
+
+  <div class="admin-page">
+    <div class="admin-header">
+      <div class="logo">
+        <div class="logo-icon">C</div>
+        CareConnect Admin
+      </div>
+      <a href="admin-home.html" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Admin Home
+      </a>
+    </div>
+
+    <div class="admin-content">
+      <div class="page-title-section">
+        <h1>Today's Schedule</h1>
+        <p>View all appointments scheduled for today</p>
+      </div>
+
+      <div style="background: white; padding: 4rem 2rem; border-radius: 1rem; text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">📅</div>
+        <h3 style="color: #111827; margin-bottom: 0.5rem;">No appointments scheduled for today</h3>
+        <p style="color: #6B7280;">Check back tomorrow or view all appointments.</p>
+        <a href="appointments-list.html" class="cta-button" style="margin-top: 2rem;">View All Appointments</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -9,6 +9,15 @@
 </head>
 <body>
 
+  <div class="page-header">
+    <a href="index.html" class="back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Home
+    </a>
+  </div>
+
   <div class="container">
     <div class="left-side">
       <div class="logo">
@@ -17,23 +26,92 @@
       </div>
 
       <h1>Schedule Your Visit</h1>
-      <p class="subtitle">Fill in the details below to book an appointment with our doctors.</p>
+      <p class="subtitle">Fill in the details below and we'll get back to you shortly to confirm your appointment.</p>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <span class="info-icon">⏱️</span>
+          <div>
+            <strong>Quick Response</strong>
+            <p>We'll confirm within 24 hours</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">📅</span>
+          <div>
+            <strong>Flexible Scheduling</strong>
+            <p>Choose your preferred date</p>
+          </div>
+        </div>
+      </div>
 
       <form id="appointmentForm" onsubmit="submitAppointment(event)">
-        <input type="text" id="fullname" placeholder="Full Name" required>
-        <input type="email" id="email" placeholder="Email Address" required>
-        <input type="date" id="date" required>
-        <textarea id="concern" placeholder="Describe your concern or symptoms" required></textarea>
-        <button type="submit" class="cta-button">Submit Appointment</button>
-      </form>
+        <label for="fullname">Full Name *</label>
+        <input type="text" id="fullname" placeholder="Enter your full name" required>
 
-      <div style="text-align: center; margin-top: 2rem;">
-        <a href="index.html" style="color: #6B7280; text-decoration: none; font-weight: 500;">← Back to Home</a>
-      </div>
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" placeholder="your.email@example.com" required>
+
+        <label for="phone">Phone Number *</label>
+        <input type="tel" id="phone" placeholder="(555) 123-4567" required>
+
+        <label for="date">Preferred Date *</label>
+        <input type="date" id="date" required>
+
+        <label for="time">Preferred Time *</label>
+        <select id="time" required>
+          <option value="">Select a time</option>
+          <option value="09:00">09:00 AM</option>
+          <option value="10:00">10:00 AM</option>
+          <option value="11:00">11:00 AM</option>
+          <option value="14:00">02:00 PM</option>
+          <option value="15:00">03:00 PM</option>
+          <option value="16:00">04:00 PM</option>
+        </select>
+
+        <label for="concern">Reason for Visit *</label>
+        <textarea id="concern" placeholder="Please describe your health concern or reason for visit..." required></textarea>
+
+        <button type="submit" class="cta-button">Submit Appointment Request</button>
+      </form>
     </div>
 
     <div class="right-side">
-      <img src="hospital.jpg" class="main-img" alt="Medical Appointment">
+      <div class="appointment-help">
+        <h3>Need Help?</h3>
+        <p>If you have any questions or need urgent care, please contact us:</p>
+        
+        <div class="help-contact">
+          <div class="help-item">
+            <span>📞</span>
+            <div>
+              <strong>Call Us</strong>
+              <p>(555) 123-4567</p>
+            </div>
+          </div>
+          <div class="help-item">
+            <span>⚡</span>
+            <div>
+              <strong>Emergency?</strong>
+              <p>Call 911 or visit ER</p>
+            </div>
+          </div>
+          <div class="help-item">
+            <span>💬</span>
+            <div>
+              <strong>Email</strong>
+              <p>info@careconnect.com</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="office-hours">
+          <h4>Office Hours</h4>
+          <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+          <p>Saturday: 9:00 AM - 2:00 PM</p>
+          <p>Sunday: Closed</p>
+        </div>
+      </div>
     </div>
   </div>
 

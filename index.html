@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CareConnect | Home</title>
+  <title>CareConnect | Your Health, Our Priority</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
@@ -13,7 +13,7 @@
 
     <!-- NAVIGATION -->
     <div class="nav">
-      <a href="index.html">Home</a>
+      <a href="index.html" class="active">Home</a>
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
       <a href="login.html" style="padding: 0.5rem 1.5rem; background: linear-gradient(135deg, #9C91FF 0%, #7C6FFF 100%); border-radius: 0.75rem; color: white; font-weight: 600;">
@@ -34,7 +34,7 @@
       </h1>
 
       <p class="subtitle">
-        Fast, simple, and reliable healthcare scheduling—anytime, anywhere.
+        Fast, simple, and reliable healthcare scheduling—anytime, anywhere. Connect with trusted healthcare professionals in just a few clicks.
       </p>
 
       <a href="appointment.html">
@@ -45,20 +45,113 @@
           </svg>
         </button>
       </a>
+
+      <!-- FEATURES -->
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div>
+            <div class="feature-title">Instant Booking</div>
+            <div class="feature-desc">Schedule in seconds</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔒</div>
+          <div>
+            <div class="feature-title">Secure & Private</div>
+            <div class="feature-desc">Your data protected</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">👨‍⚕️</div>
+          <div>
+            <div class="feature-title">Expert Doctors</div>
+            <div class="feature-desc">Qualified professionals</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- RIGHT SIDE -->
     <div class="right-side">
       <img src="hospital.jpg" class="main-img" alt="Hospital Image">
       
-      <!-- OPTIONAL CHAT BUBBLES -->
-      <div class="chat-bubbles">
-        <div class="chat-bubble sent">Hello, I need an appointment.</div>
-        <div class="chat-bubble received">Sure! How can I help?</div>
+      <!-- STATS OVERLAY -->
+      <div class="stats-overlay">
+        <div class="stat-item">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Happy Patients</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Available</div>
+        </div>
       </div>
     </div>
 
   </div>
+
+  <!-- TESTIMONIALS SECTION -->
+  <div class="testimonials-section">
+    <div class="section-content">
+      <h2 class="section-title">What Our Patients Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">"CareConnect made booking my appointment so easy! The process was quick and the staff was very professional."</p>
+          <div class="testimonial-author">
+            <strong>Maria Santos</strong>
+            <span>Patient since 2024</span>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">"Best healthcare platform I've used. Simple, reliable, and the doctors are excellent!"</p>
+          <div class="testimonial-author">
+            <strong>Juan Dela Cruz</strong>
+            <span>Patient since 2023</span>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">"The 24/7 availability is amazing. I got the care I needed right when I needed it."</p>
+          <div class="testimonial-author">
+            <strong>Ana Reyes</strong>
+            <span>Patient since 2024</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="logo" style="margin-bottom: 1rem;">
+          <div class="logo-icon">C</div>
+          CareConnect
+        </div>
+        <p style="color: #9CA3AF; font-size: 0.9rem;">Making healthcare accessible to everyone.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="appointment.html">Book Appointment</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>📧 info@careconnect.com</p>
+        <p>📞 (555) 123-4567</p>
+        <p>📍 123 Health St, Medical City</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 CareConnect. All rights reserved.</p>
+    </div>
+  </footer>
 
 </body>
 </html>

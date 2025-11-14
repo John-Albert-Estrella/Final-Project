@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Portal | CareConnect</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body onload="checkAdminAuth()">
+
+  <div class="admin-page">
+    <div class="admin-header">
+      <div class="logo">
+        <div class="logo-icon">C</div>
+        CareConnect Admin
+      </div>
+      <button onclick="logoutAdmin()" class="logout-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+        Logout
+      </button>
+    </div>
+
+    <div class="admin-content">
+      <div class="welcome-banner">
+        <h1>Welcome back, Admin! 👋</h1>
+        <p>Manage appointments, view patient records, and oversee clinic operations.</p>
+      </div>
+
+      <!-- QUICK STATS -->
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">📅</div>
+          <div>
+            <div class="card-label">Total Appointments</div>
+            <div class="card-value" id="totalAppointments">0</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">⏳</div>
+          <div>
+            <div class="card-label">Pending Approvals</div>
+            <div class="card-value" id="pendingAppointments">0</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">✅</div>
+          <div>
+            <div class="card-label">Approved Today</div>
+            <div class="card-value" id="approvedToday">0</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">👥</div>
+          <div>
+            <div class="card-label">Total Patients</div>
+            <div class="card-value">48</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUICK ACTIONS -->
+      <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-grid">
+          <a href="appointments-list.html" class="action-card">
+            <div class="action-icon">📋</div>
+            <h3>View All Appointments</h3>
+            <p>Manage and review all appointment requests</p>
+            <span class="action-arrow">→</span>
+          </a>
+          <a href="patients.html" class="action-card">
+            <div class="action-icon">🏥</div>
+            <h3>Patient Records</h3>
+            <p>Access and update patient information</p>
+            <span class="action-arrow">→</span>
+          </a>
+          <a href="schedule.html" class="action-card">
+            <div class="action-icon">📆</div>
+            <h3>Today's Schedule</h3>
+            <p>View appointments scheduled for today</p>
+            <span class="action-arrow">→</span>
+          </a>
+          <a href="reports.html" class="action-card">
+            <div class="action-icon">📊</div>
+            <h3>Reports & Analytics</h3>
+            <p>Generate reports and view statistics</p>
+            <span class="action-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- RECENT ACTIVITY -->
+      <div class="recent-activity">
+        <h2>Recent Activity</h2>
+        <div id="recentActivityList" class="activity-list">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Update stats on page load
+    window.addEventListener('load', function() {
+      const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+      const pending = appointments.filter(a => a.status === "Pending").length;
+      const approved = appointments.filter(a => a.status === "Approved").length;
+      
+      document.getElementById('totalAppointments').textContent = appointments.length;
+      document.getElementById('pendingAppointments').textContent = pending;
+      document.getElementById('approvedToday').textContent = approved;
+
+      // Show recent activity
+      const activityList = document.getElementById('recentActivityList');
+      if (appointments.length === 0) {
+        activityList.innerHTML = '<p style="color: #9CA3AF; text-align: center; padding: 2rem;">No recent activity</p>';
+      } else {
+        const recent = appointments.slice(-5).reverse();
+        activityList.innerHTML = recent.map(app => `
+          <div class="activity-item">
+            <span class="activity-icon">${app.status === 'Approved' ? '✅' : app.status === 'Declined' ? '❌' : '⏳'}</span>
+            <div class="activity-details">
+              <strong>${app.name}</strong> - ${app.status}
+              <span class="activity-time">${app.date}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    });
+  </script>
+
+</body>
+</html>

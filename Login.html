@@ -9,29 +9,46 @@
 </head>
 <body>
 
-  <div class="container">
-    <div class="left-side">
-      <div class="logo">
+  <div class="page-header">
+    <a href="index.html" class="back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Home
+    </a>
+  </div>
+
+  <div class="login-wrapper">
+    <div class="login-container">
+      <div class="logo" style="justify-content: center; margin-bottom: 2rem;">
         <div class="logo-icon">C</div>
         CareConnect
       </div>
 
-      <h1>Admin / Doctor Login</h1>
-      <p class="subtitle">Clinic staff or doctor access</p>
+      <h1 style="text-align: center; margin-bottom: 0.5rem;">Admin Login</h1>
+      <p style="text-align: center; color: #6B7280; margin-bottom: 2rem;">Healthcare staff and doctor access</p>
 
       <form onsubmit="adminLogin(event)">
-        <input type="text" id="adminUser" placeholder="Username" required>
-        <input type="password" id="adminPass" placeholder="Password" required>
-        <button type="submit" class="cta-button">Login</button>
+        <label for="adminUser">Username</label>
+        <input type="text" id="adminUser" placeholder="Enter your username" required autocomplete="username">
+
+        <label for="adminPass">Password</label>
+        <input type="password" id="adminPass" placeholder="Enter your password" required autocomplete="current-password">
+
+        <button type="submit" class="cta-button">Login to Dashboard</button>
       </form>
 
-      <div style="text-align: center; margin-top: 2rem;">
-        <a href="index.html" style="color: #6B7280; text-decoration: none; font-weight: 500;">← Back to Home</a>
+      <div class="login-info">
+        <p style="font-size: 0.85rem; color: #9CA3AF; text-align: center; margin-top: 1.5rem;">
+          🔒 Secure login for authorized personnel only
+        </p>
+        <div style="background: #F3F4F6; padding: 1rem; border-radius: 0.75rem; margin-top: 1rem;">
+          <p style="font-size: 0.85rem; color: #6B7280; text-align: center; margin: 0;">
+            <strong>Demo Credentials:</strong><br>
+            Username: admin | Password: admin123
+          </p>
+        </div>
       </div>
-    </div>
-
-    <div class="right-side">
-      <img src="hospital.jpg" class="main-img" alt="Admin Login">
     </div>
   </div>
 

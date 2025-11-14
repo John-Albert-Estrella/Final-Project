@@ -12,7 +12,8 @@ function adminLogin(event) {
 
     if (user === ADMIN_USERNAME && pass === ADMIN_PASSWORD) {
         localStorage.setItem("isAdminLoggedIn", "true");
-        window.location.href = "dashboard.html";
+        // ✅ FIXED: Redirect to admin-home.html instead of dashboard.html
+        window.location.href = "admin-home.html";
     } else {
         alert("❌ Invalid username or password.");
     }
@@ -26,11 +27,13 @@ function submitAppointment(event) {
 
     const fullName = document.getElementById("fullname").value.trim();
     const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone") ? document.getElementById("phone").value.trim() : '';
     const date = document.getElementById("date").value;
+    const time = document.getElementById("time") ? document.getElementById("time").value : '';
     const concern = document.getElementById("concern").value.trim();
 
     if (!fullName || !email || !date || !concern) {
-        alert("⚠️ Please fill out all fields.");
+        alert("⚠️ Please fill out all required fields.");
         return;
     }
 
@@ -38,9 +41,12 @@ function submitAppointment(event) {
         id: Date.now(),
         name: fullName,
         email: email,
+        phone: phone,
         date: date,
+        time: time,
         concern: concern,
-        status: "Pending"
+        status: "Pending",
+        submittedAt: new Date().toISOString()
     };
 
     let list = JSON.parse(localStorage.getItem("appointments")) || [];
@@ -48,8 +54,14 @@ function submitAppointment(event) {
 
     localStorage.setItem("appointments", JSON.stringify(list));
 
-    alert("✅ Appointment submitted successfully!\n\nWe'll contact you soon.");
+    alert("✅ Appointment Request Submitted!\n\nThank you " + fullName + "!\nWe've received your appointment request.\n\nYou'll receive a confirmation email within 24 hours.\n\nAppointment Details:\n• Date: " + date + "\n• Time: " + time + "\n• Email: " + email);
+    
     document.getElementById("appointmentForm").reset();
+    
+    // Redirect to home after 2 seconds
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 2000);
 }
 
 // ===========================
@@ -67,34 +79,55 @@ function loadAppointments() {
 
     container.innerHTML = "";
 
-    const list = JSON.parse(localStorage.getItem("appointments")) || [];
+    let list = JSON.parse(localStorage.getItem("appointments")) || [];
+    
+    // Apply filter if currentFilter exists
+    if (typeof currentFilter !== 'undefined' && currentFilter !== 'all') {
+        list = list.filter(app => app.status === currentFilter);
+    }
 
     if (list.length === 0) {
         container.innerHTML = `
-            <div style="background: white; padding: 3rem; border-radius: 1rem; text-align: center; color: #6B7280;">
-                <p style="font-size: 1.2rem;">📋 No appointments yet.</p>
+            <div style="background: white; padding: 3rem; border-radius: 1rem; text-align: center; color: #6B7280; margin-top: 2rem;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
+                <p style="font-size: 1.2rem; margin: 0;">No appointments found</p>
             </div>
         `;
         return;
     }
 
+    // Sort by date (newest first)
+    list.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+
     list.forEach(app => {
         const statusColor = app.status === "Approved" ? "#10B981" : 
                            app.status === "Declined" ? "#EF4444" : "#F59E0B";
         
+        const statusIcon = app.status === "Approved" ? "✅" : 
+                          app.status === "Declined" ? "❌" : "⏳";
+        
         container.innerHTML += `
             <div class="appointment-card" style="border-left-color: ${statusColor};">
-                <p><strong>👤 Name:</strong> ${app.name}</p>
-                <p><strong>📧 Email:</strong> ${app.email}</p>
-                <p><strong>📅 Date:</strong> ${app.date}</p>
-                <p><strong>💬 Concern:</strong> ${app.concern}</p>
-                <p><strong>📌 Status:</strong> <span style="color: ${statusColor}; font-weight: 600;">${app.status}</span></p>
+                <div class="appointment-header">
+                    <h3>${statusIcon} ${app.name}</h3>
+                    <span class="status-badge status-${app.status.toLowerCase()}">${app.status}</span>
+                </div>
+                <div class="appointment-details">
+                    <p><strong>📧 Email:</strong> ${app.email}</p>
+                    ${app.phone ? `<p><strong>📞 Phone:</strong> ${app.phone}</p>` : ''}
+                    <p><strong>📅 Date:</strong> ${app.date} ${app.time ? 'at ' + app.time : ''}</p>
+                    <p><strong>💬 Concern:</strong> ${app.concern}</p>
+                </div>
                 ${app.status === "Pending" ? `
-                    <div>
-                        <button onclick="approve(${app.id})">✓ Approve</button>
-                        <button onclick="decline(${app.id})">✗ Decline</button>
+                    <div class="appointment-actions">
+                        <button onclick="approve(${app.id})" class="btn-approve">✓ Approve</button>
+                        <button onclick="decline(${app.id})" class="btn-decline">✗ Decline</button>
                     </div>
-                ` : ''}
+                ` : `
+                    <div class="appointment-info">
+                        <small style="color: #6B7280;">Status updated: ${app.status}</small>
+                    </div>
+                `}
             </div>
         `;
     });
@@ -104,11 +137,15 @@ function loadAppointments() {
 // APPROVE / DECLINE APPOINTMENTS
 // ===========================
 function approve(id) {
-    updateStatus(id, "Approved");
+    if (confirm("Approve this appointment?")) {
+        updateStatus(id, "Approved");
+    }
 }
 
 function decline(id) {
-    updateStatus(id, "Declined");
+    if (confirm("Decline this appointment?")) {
+        updateStatus(id, "Declined");
+    }
 }
 
 function updateStatus(id, newStatus) {
@@ -122,6 +159,11 @@ function updateStatus(id, newStatus) {
     });
 
     localStorage.setItem("appointments", JSON.stringify(list));
+    
+    // Show success message
+    const icon = newStatus === "Approved" ? "✅" : "❌";
+    alert(icon + " Appointment " + newStatus.toLowerCase() + " successfully!");
+    
     loadAppointments();
 }
 
@@ -140,11 +182,17 @@ function logoutAdmin() {
 // ===========================
 function checkAdminAuth() {
     if (localStorage.getItem("isAdminLoggedIn") !== "true") {
+        alert("⚠️ Access Denied\n\nYou must be logged in to access this page.");
         window.location.href = "login.html";
     }
 }
 
-// Auto-check on dashboard page
-if (window.location.pathname.includes("dashboard.html")) {
-    checkAdminAuth();
+// Auto-check on admin pages
+const adminPages = ['admin-home.html', 'appointments-list.html', 'patients.html', 'dashboard.html'];
+const currentPage = window.location.pathname.split('/').pop();
+
+if (adminPages.includes(currentPage)) {
+    if (localStorage.getItem("isAdminLoggedIn") !== "true") {
+        window.location.href = "login.html";
+    }
 }
