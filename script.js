@@ -12,7 +12,6 @@ function adminLogin(event) {
 
     if (user === ADMIN_USERNAME && pass === ADMIN_PASSWORD) {
         localStorage.setItem("isAdminLoggedIn", "true");
-        // ✅ FIXED: Redirect to admin-home.html instead of dashboard.html
         window.location.href = "admin-home.html";
     } else {
         alert("❌ Invalid username or password.");
@@ -58,7 +57,6 @@ function submitAppointment(event) {
     
     document.getElementById("appointmentForm").reset();
     
-    // Redirect to home after 2 seconds
     setTimeout(() => {
         window.location.href = "index.html";
     }, 2000);
@@ -101,10 +99,14 @@ function loadAppointments() {
 
     list.forEach(app => {
         const statusColor = app.status === "Approved" ? "#10B981" : 
-                           app.status === "Declined" ? "#EF4444" : "#F59E0B";
+                           app.status === "Declined" ? "#EF4444" : 
+                           app.status === "Completed" ? "#8B5CF6" :
+                           "#F59E0B";
         
         const statusIcon = app.status === "Approved" ? "✅" : 
-                          app.status === "Declined" ? "❌" : "⏳";
+                          app.status === "Declined" ? "❌" : 
+                          app.status === "Completed" ? "🎉" :
+                          "⏳";
         
         container.innerHTML += `
             <div class="appointment-card" style="border-left-color: ${statusColor};">
@@ -117,15 +119,23 @@ function loadAppointments() {
                     ${app.phone ? `<p><strong>📞 Phone:</strong> ${app.phone}</p>` : ''}
                     <p><strong>📅 Date:</strong> ${app.date} ${app.time ? 'at ' + app.time : ''}</p>
                     <p><strong>💬 Concern:</strong> ${app.concern}</p>
+                    ${app.completedDate ? `<p><strong>✓ Completed:</strong> ${app.completedDate}</p>` : ''}
                 </div>
                 ${app.status === "Pending" ? `
                     <div class="appointment-actions">
                         <button onclick="approve(${app.id})" class="btn-approve">✓ Approve</button>
                         <button onclick="decline(${app.id})" class="btn-decline">✗ Decline</button>
                     </div>
+                ` : app.status === "Approved" ? `
+                    <div class="appointment-actions">
+                        <button onclick="markAsCompleted(${app.id})" class="btn-complete">✓ Mark as Completed</button>
+                        <button onclick="decline(${app.id})" class="btn-cancel">Cancel Appointment</button>
+                    </div>
                 ` : `
                     <div class="appointment-info">
-                        <small style="color: #6B7280;">Status updated: ${app.status}</small>
+                        <small style="color: #6B7280;">
+                            ${app.status === "Completed" ? '✓ Visit completed and saved to patient records' : 'Status: ' + app.status}
+                        </small>
                     </div>
                 `}
             </div>
@@ -134,7 +144,7 @@ function loadAppointments() {
 }
 
 // ===========================
-// APPROVE / DECLINE APPOINTMENTS
+// APPROVE / DECLINE / COMPLETE APPOINTMENTS
 // ===========================
 function approve(id) {
     if (confirm("Approve this appointment?")) {
@@ -145,6 +155,30 @@ function approve(id) {
 function decline(id) {
     if (confirm("Decline this appointment?")) {
         updateStatus(id, "Declined");
+    }
+}
+
+function markAsCompleted(id) {
+    if (confirm("Mark this appointment as completed?\n\nThis will save the visit to the patient's medical records.")) {
+        let list = JSON.parse(localStorage.getItem("appointments")) || [];
+        
+        list = list.map(app => {
+            if (app.id === id) {
+                app.status = "Completed";
+                app.completedDate = new Date().toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+            return app;
+        });
+
+        localStorage.setItem("appointments", JSON.stringify(list));
+        
+        alert("🎉 Appointment marked as completed!\n\nThe visit has been saved to the patient's medical records.");
+        
+        loadAppointments();
     }
 }
 
@@ -160,7 +194,6 @@ function updateStatus(id, newStatus) {
 
     localStorage.setItem("appointments", JSON.stringify(list));
     
-    // Show success message
     const icon = newStatus === "Approved" ? "✅" : "❌";
     alert(icon + " Appointment " + newStatus.toLowerCase() + " successfully!");
     
@@ -188,7 +221,7 @@ function checkAdminAuth() {
 }
 
 // Auto-check on admin pages
-const adminPages = ['admin-home.html', 'appointments-list.html', 'patients.html', 'dashboard.html'];
+const adminPages = ['admin-home.html', 'appointments-list.html', 'patients.html', 'dashboard.html', 'schedule.html', 'reports.html'];
 const currentPage = window.location.pathname.split('/').pop();
 
 if (adminPages.includes(currentPage)) {

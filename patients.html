@@ -3,40 +3,197 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Care Connect | Patient Records</title>
+  <title>Patient Records | CareConnect</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
-
 </head>
-<body>
-  <div class="container">
-    <div class="left-side">
-      <div class="logo"><div class="logo-icon">CC</div>Care Connect</div>
-      <h1>Patient Records</h1>
+<body onload="checkAdminAuth(); loadPatients();">
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Contact</th>
-            <th>Diagnosis</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Juan Dela Cruz</td>
-            <td>0917-123-4567</td>
-            <td>Flu</td>
-            <td><button class="cta-button">Edit</button></td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="admin-page">
+    <div class="admin-header">
+      <div class="logo">
+        <div class="logo-icon">C</div>
+        CareConnect Admin
+      </div>
+      <a href="admin-home.html" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Admin Home
+      </a>
     </div>
 
-    <div class="right-side">
-      <img src="doctor-illustration.jpg" alt="Patient Records" class="main-img">
+    <div class="admin-content">
+      <div class="page-title-section">
+        <h1>Patient Records</h1>
+        <p>View and manage all patient information and visit history</p>
+      </div>
+
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Patient Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Total Visits</th>
+              <th>Last Visit</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="patientsTableBody">
+            <!-- Populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+
+  <!-- Patient Details Modal -->
+  <div id="patientModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalPatientName">Patient Details</h2>
+        <button onclick="closeModal()" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function loadPatients() {
+      const tbody = document.getElementById('patientsTableBody');
+      const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+      
+      if (appointments.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 3rem; color: #9CA3AF;">No patient records found</td></tr>';
+        return;
+      }
+
+      // Group appointments by patient email
+      const patientsMap = {};
+      appointments.forEach(app => {
+        if (!patientsMap[app.email]) {
+          patientsMap[app.email] = {
+            name: app.name,
+            email: app.email,
+            phone: app.phone || 'N/A',
+            visits: [],
+            completedVisits: 0
+          };
+        }
+        patientsMap[app.email].visits.push(app);
+        if (app.status === "Completed") {
+          patientsMap[app.email].completedVisits++;
+        }
+      });
+
+      const patients = Object.values(patientsMap);
+      
+      tbody.innerHTML = patients.map(patient => {
+        // Find most recent visit
+        const sortedVisits = patient.visits.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const lastVisit = sortedVisits[0];
+        const lastVisitDate = lastVisit.date;
+        const lastVisitStatus = lastVisit.status;
+        
+        // Determine overall patient status
+        const hasCompleted = patient.visits.some(v => v.status === "Completed");
+        const hasPending = patient.visits.some(v => v.status === "Pending");
+        const overallStatus = hasPending ? "Active" : hasCompleted ? "Regular" : "New";
+        
+        return `
+          <tr>
+            <td><strong>${patient.name}</strong></td>
+            <td>${patient.email}</td>
+            <td>${patient.phone}</td>
+            <td>
+              <span style="font-weight: 600; color: #2563EB;">
+                ${patient.completedVisits} completed
+              </span>
+              <span style="color: #9CA3AF; font-size: 0.85rem;">
+                (${patient.visits.length} total)
+              </span>
+            </td>
+            <td>${lastVisitDate}</td>
+            <td><span class="status-badge status-${overallStatus.toLowerCase()}">${overallStatus}</span></td>
+            <td>
+              <button class="btn-small" onclick='viewPatientDetails(${JSON.stringify(patient).replace(/'/g, "&apos;")})'>View History</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function viewPatientDetails(patient) {
+      const modal = document.getElementById('patientModal');
+      const modalName = document.getElementById('modalPatientName');
+      const modalBody = document.getElementById('modalBody');
+      
+      modalName.textContent = patient.name + "'s Medical History";
+      
+      // Sort visits by date (newest first)
+      const sortedVisits = patient.visits.sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      modalBody.innerHTML = `
+        <div class="patient-info-grid">
+          <div class="patient-info-item">
+            <strong>📧 Email:</strong>
+            <p>${patient.email}</p>
+          </div>
+          <div class="patient-info-item">
+            <strong>📞 Phone:</strong>
+            <p>${patient.phone}</p>
+          </div>
+          <div class="patient-info-item">
+            <strong>📊 Total Visits:</strong>
+            <p>${patient.visits.length}</p>
+          </div>
+          <div class="patient-info-item">
+            <strong>✅ Completed:</strong>
+            <p>${patient.completedVisits}</p>
+          </div>
+        </div>
+        
+        <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #111827;">Visit History</h3>
+        <div class="visit-history">
+          ${sortedVisits.map(visit => `
+            <div class="visit-card">
+              <div class="visit-header">
+                <div>
+                  <div class="visit-date">📅 ${visit.date} ${visit.time ? 'at ' + visit.time : ''}</div>
+                  <div class="visit-concern"><strong>Concern:</strong> ${visit.concern}</div>
+                </div>
+                <span class="status-badge status-${visit.status.toLowerCase()}">${visit.status}</span>
+              </div>
+              ${visit.status === "Completed" && visit.completedDate ? `
+                <div class="visit-footer">
+                  <small style="color: #6B7280;">✓ Completed on ${visit.completedDate}</small>
+                </div>
+              ` : ''}
+            </div>
+          `).join('')}
+        </div>
+      `;
+      
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('patientModal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('patientModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
+
 </body>
 </html>
